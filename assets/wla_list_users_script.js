@@ -131,6 +131,19 @@ async function processUserObjects(array_of_user_objects) {
 			user_object['last_login_date'] = dt.toLocaleString(DateTime.DATE_SHORT)
 			user_object['last_login_time'] = dt.toLocaleString(DateTime.TIME_24_SIMPLE)
 		}
+
+		if (user_object['created_at']) {
+			var dt = DateTime.fromISO(user_object['created_at'])
+			user_object['created_at_date'] = dt.toLocaleString(DateTime.DATE_SHORT)
+			user_object['created_at_time'] = dt.toLocaleString(DateTime.TIME_24_SIMPLE)
+		}
+
+		if (user_object['updated_at']) {
+			var dt = DateTime.fromISO(user_object['updated_at'])
+			user_object['updated_at_date'] = dt.toLocaleString(DateTime.DATE_SHORT)
+			user_object['updated_at_time'] = dt.toLocaleString(DateTime.TIME_24_SIMPLE)
+		}
+
 		/*****************************************************************************************/
 
 		all_users.push(user_object)
@@ -170,7 +183,7 @@ const main = async () => {
 	var array_of_user_objects = await getData('/api/v2/users?page[size]=100', 'users')
 	var processed_array_of_user_objects = await processUserObjects(array_of_user_objects)
 
-	console.log("TOTAL NUMBER OF USERS: " + array_of_user_objects.length)
+	console.log("TOTAL NUMBER OF USERS: " + processed_array_of_user_objects.length)
 
 	/*****************************************************************************************/
 	//Define variables for input elements
@@ -244,9 +257,29 @@ const main = async () => {
 	 * LOOK UP CONFIG DATA FROM LOCAL STORAGE
 	/*****************************************************************************************/
 	var group_by_key = getKey("wla_list_users_settings_group_users_by_field_value")
+	var sort_by_key = getKey("wla_list_users_settings_sort_users_by_field_value")
 	var link_names_value = getKey("wla_list_users_settings_make_username_url_value")
+	var link_emails_value = getKey("wla_list_users_settings_make_user_emails_url_value")
 	var include_user_id = getKey("wla_list_users_settings_include_user_id")
 	var include_user_url = getKey("wla_list_users_settings_include_user_url")
+	var include_user_name = getKey("wla_list_users_settings_include_user_name")
+	var include_user_role = getKey("wla_list_users_settings_include_user_role")
+	var include_user_email = getKey("wla_list_users_settings_include_user_email")
+	var include_user_created_at_date = getKey("wla_list_users_settings_include_user_created_at_date")
+	var include_user_created_at_time = getKey("wla_list_users_settings_include_user_created_at_time")
+	var include_user_updated_at_date = getKey("wla_list_users_settings_include_user_updated_at_date")
+	var include_user_updated_at_time = getKey("wla_list_users_settings_include_user_updated_at_time")
+	var include_user_timezone = getKey("wla_list_users_settings_include_user_timezone")
+	var include_user_iana_timezone = getKey("wla_list_users_settings_include_user_iana_timezone")
+	var include_user_phone = getKey("wla_list_users_settings_include_user_phone")
+	var include_user_shared_phone = getKey("wla_list_users_settings_include_user_shared_phone")
+	//var include_user_photo = getKey("wla_list_users_settings_include_user_photo")
+	var include_user_locale_id = getKey("wla_list_users_settings_include_user_locale_id")
+	var include_user_locale = getKey("wla_list_users_settings_include_user_locale")
+	var include_user_email_verified_status = getKey("wla_list_users_settings_include_user_email_verified_status")
+	var include_user_external_id = getKey("wla_list_users_settings_include_user_external_id")
+
+
 
 	console.log(`group_by_key: ${group_by_key}`)
 	console.log(`link_names_value: ${link_names_value}`)
@@ -254,7 +287,9 @@ const main = async () => {
 	console.log(`include_user_id: ${include_user_id}`)
 	console.log(`include_user_url: ${include_user_url}`)
 
-
+	if (sort_by_key === '') {
+		sort_by_key = 'name'
+	}
 
 	var table_columns_object = []
 
@@ -262,23 +297,37 @@ const main = async () => {
 	/*****************************************************************************************
 	 * CREATE USER COLUMN
 	/*****************************************************************************************/
-	if (link_names_value === 'Yes') {
-		var user_name_column_object = {
-			title: "Name", field: "name", formatter: "link", formatterParams: {
-				labelField: "name",
-				urlField: "agent_url",
-				target: "_blank"
-			}
-		}
-	}
 
+	/*****************************************************************************************
+	 * USER NAME COLUMN OBJECT
 	/*****************************************************************************************/
-	if (link_names_value !== 'Yes') {
-		var user_name_column_object = {
-			title: "Name", field: "name"
-		}
-	}
+	if (include_user_name === 'true') {
 
+		/*****************************************************************************************/
+		if (link_names_value === 'Yes') {
+			var user_name_column_object = {
+				title: "Name", field: "name", formatter: "link", formatterParams: {
+					labelField: "name",
+					urlField: "agent_url",
+					target: "_blank"
+				}
+			}
+			table_columns_object.push(user_name_column_object)
+		}
+		/*****************************************************************************************/
+
+		/*****************************************************************************************/
+		if (link_names_value !== 'Yes') {
+			var user_name_column_object = { title: "Name", field: "name" }
+			table_columns_object.push(user_name_column_object)
+		}
+		/*****************************************************************************************/
+
+	} // END include_user_name IF STATEMENT
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER ID COLUMN OBJECT
 	/*****************************************************************************************/
 	if (include_user_id === 'true') {
 		var user_id_column_object = { title: "User ID", field: "id" }
@@ -286,6 +335,8 @@ const main = async () => {
 	}
 	/*****************************************************************************************/
 
+	/*****************************************************************************************
+	 * USER URL COLUMN OBJECT
 	/*****************************************************************************************/
 	if (include_user_url === 'true') {
 		var user_url_column_object = { title: "User URL", field: "url" }
@@ -293,29 +344,171 @@ const main = async () => {
 	}
 	/*****************************************************************************************/
 
-
+	/*****************************************************************************************
+	 * USER EMAIL COLUMN OBJECT
 	/*****************************************************************************************/
-	var user_email_column_object = {
-		title: "Email", field: "email", formatter: "link", formatterParams: {
-			labelField: "email",
-			urlPrefix: "mailto://",
-			target: "_blank"
+	if (link_emails_value === 'Yes') {
+		if (include_user_email === 'true') {
+			var user_email_column_object = {
+				title: "Email", field: "email", formatter: "link", formatterParams: {
+					labelField: "email",
+					urlPrefix: "mailto://",
+					target: "_blank"
+				}
+			}
+			table_columns_object.push(user_email_column_object)
+		}
+	}
+
+	if (link_emails_value !== 'Yes') {
+		if (include_user_email === 'true') {
+			var user_email_column_object = { title: "Email", field: "email" }
+			table_columns_object.push(user_email_column_object)
 		}
 	}
 	/*****************************************************************************************/
 
+	/*****************************************************************************************
+	 * USER ROLE COLUMN OBJECT
 	/*****************************************************************************************/
-	var user_title_column_object = { title: "Role", field: "role" }
+	if (include_user_role === 'true') {
+		var user_role_column_object = { title: "Role", field: "role", sorter: "string", sorterParams: { locale: true, alignEmptyValues: "top" } }
+		table_columns_object.push(user_role_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER CREATED AT DATE
+	/*****************************************************************************************/
+	if (include_user_created_at_date === 'true') {
+		var user_created_at_date_column_object = { title: "Created At Date", field: "created_at_date" }
+		table_columns_object.push(user_created_at_date_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER CREATED AT TIME
+	/*****************************************************************************************/
+	if (include_user_created_at_time === 'true') {
+		var user_created_at_time_column_object = { title: "Created At Time", field: "created_at_time" }
+		table_columns_object.push(user_created_at_time_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER UPDATED AT DATE
+	/*****************************************************************************************/
+	if (include_user_updated_at_date === 'true') {
+		var user_updated_at_date_column_object = { title: "Updated At Date", field: "updated_at_date" }
+		table_columns_object.push(user_updated_at_date_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER UPDATED AT TIME
+	/*****************************************************************************************/
+	if (include_user_updated_at_time === 'true') {
+		var user_updated_at_time_column_object = { title: "Updated At Time", field: "updated_at_time" }
+		table_columns_object.push(user_updated_at_time_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER TIME ZONE
+	/*****************************************************************************************/
+	if (include_user_timezone === 'true') {
+		var user_timezone_column_object = { title: "Time Zone", field: "time_zone" }
+		table_columns_object.push(user_timezone_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER TIME IANA ZONE
+	/*****************************************************************************************/
+	if (include_user_iana_timezone === 'true') {
+		var user_iana_timezone_column_object = { title: "IANA Time Zone", field: "iana_time_zone" }
+		table_columns_object.push(user_iana_timezone_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER PHONE
+	/*****************************************************************************************/
+	if (include_user_phone === 'true') {
+		var user_phone_column_object = { title: "Phone", field: "phone" }
+		table_columns_object.push(user_phone_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	 * USER SHARED PHONE
+	/*****************************************************************************************/
+	if (include_user_shared_phone === 'true') {
+		var user_shared_phone_column_object = { title: "Shared Phone", field: "shared_phone_number" }
+		table_columns_object.push(user_shared_phone_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	  * USER PHOTO
+	/*****************************************************************************************
+	if (include_user_photo === 'true') {
+		var user_photo_column_object = { title: "Photo", field: "photo" }
+		table_columns_object.push(user_photo_column_object)
+	}
+	*****************************************************************************************/
+
+	/*****************************************************************************************
+	  * USER LOCALE ID
+	/*****************************************************************************************/
+	if (include_user_locale_id === 'true') {
+		var user_locale_id_column_object = { title: "Locale ID", field: "locale_id" }
+		table_columns_object.push(user_locale_id_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	  * USER LOCALE
+	/*****************************************************************************************/
+	if (include_user_locale === 'true') {
+		var user_locale_column_object = { title: "Locale", field: "locale" }
+		table_columns_object.push(user_locale_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	  * USER EMAIL VERIFIED STATUS
+	/*****************************************************************************************/
+	if (include_user_email_verified_status === 'true') {
+		var user_email_verified_status_column_object = { title: "Email Verification Status", field: "verified" }
+		table_columns_object.push(user_email_verified_status_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	  * USER EXTERNAL ID
+	/*****************************************************************************************/
+	if (include_user_external_id === 'true') {
+		var user_external_id_column_object = { title: "External ID", field: "external_id" }
+		table_columns_object.push(user_external_id_column_object)
+	}
+	/*****************************************************************************************/
+
+
 	var user_tags_column_object = { title: "Tags", field: "tags", headerSort: false }
 	var user_last_login_date_column_object = { title: "Last Login Date", field: "last_login_date" }
 	var user_last_login_time_column_object = { title: "Last Login Time", field: "last_login_time" }
+	var user_created_at_date_column_object = { title: "Created At Date", field: "created_at_date" }
+	var user_created_at_time_column_object = { title: "Created At Time", field: "created_at_time" }
+	var user_updated_at_date_column_object = { title: "Updated At Date", field: "updated_at_date" }
+	var user_updated_at_date_column_object = { title: "Updated At Time", field: "updated_at_time" }
 	var user_organizations_column_object = { title: "Organizations", field: "organization_names", headerSort: false }
 	/*****************************************************************************************/
 
 	/*****************************************************************************************/
-	table_columns_object.push(user_name_column_object)
-	table_columns_object.push(user_email_column_object)
-	table_columns_object.push(user_title_column_object)
+
+	//	table_columns_object.push(user_email_column_object)
+	//	table_columns_object.push(user_role_column_object)
 	table_columns_object.push(user_tags_column_object)
 	table_columns_object.push(user_last_login_date_column_object)
 	table_columns_object.push(user_last_login_time_column_object)
@@ -369,7 +562,8 @@ const main = async () => {
 ,*/
 		initialSort: [
 			{
-				column: "name", dir: "asc"
+				//				column: "name", dir: "asc"
+				column: sort_by_key, dir: "asc"
 			}
 		],
 		pagination: true,
