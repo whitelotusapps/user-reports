@@ -37,7 +37,7 @@ function getCurrentlySavedSettings() {
         if (form_element_id.includes('wla_list_users_settings')) {
             var saved_form_element_value = getKey(form_element_id)
             var saved_form_element_type = document.getElementById(form_element_id).type
-            //            console.log(`FORM ELEMENT TYPE: ${saved_form_element_type}`)
+            console.log(`FORM ELEMENT TYPE: ${saved_form_element_type}`)
 
 
 
@@ -55,13 +55,15 @@ function getCurrentlySavedSettings() {
                 document.getElementById(form_element_id).value = saved_form_element_value
             }
 
-            if (saved_form_element_type === 'checkbox' && saved_form_element_value === 'checked') {
-                console.log(`IF FORM ELEMENT TYPE: ${saved_form_element_type}`)
-                console.log(`IF FORM ELEMENT VALUE: ${saved_form_element_value}`)
+            if (saved_form_element_type === 'checkbox' && saved_form_element_value === 'true') {
+                //                console.log(`TRUE FORM ELEMENT TYPE: ${saved_form_element_type}`)
+                //                console.log(`TRUE FORM ELEMENT VALUE: ${saved_form_element_value}`)
                 document.getElementById(form_element_id).checked = true
             }
 
-            if (saved_form_element_type === 'checkbox' && saved_form_element_value !== 'checked') {
+            if (saved_form_element_type === 'checkbox' && saved_form_element_value === 'false') {
+                //                console.log(`FALSE FORM ELEMENT TYPE: ${saved_form_element_type}`)
+                //                console.log(`FALSE FORM ELEMENT VALUE: ${saved_form_element_value}`)
                 document.getElementById(form_element_id).checked = false
             }
 
@@ -140,11 +142,14 @@ function saveSettings() {
             var form_element_value = document.getElementById(form_element_id).value
             var form_element_type = document.getElementById(form_element_id).type
 
-            if (form_element_type === 'checkbox' && form_element_value !== null) {
-                console.log(`ELEMENT ID: ${form_element_id}`)
-                console.log(`ELEMENT VALUE: ${form_element_value}`)
-                form_element_value = 'checked'
+
+            if (form_element_type === 'checkbox') {
+                form_element_value = document.getElementById(form_element_id).checked
+                //                console.log(`ELEMENT ID: ${form_element_id}`)
+                //                console.log(`ELEMENT VALUE: ${form_element_value}`)
+                //form_element_value = 'checked'
             }
+
             setKey(form_element_id, form_element_value)
         }
     });

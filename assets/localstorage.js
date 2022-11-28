@@ -1,26 +1,15 @@
-/* EXAMPLES:
-
-setKey("username", "brothaz").then(function (username) {
-    console.log(`SET: ${username}`)
-});
-
-getKey("username").then(function (username) {
-    console.log(`GET: ${username}`); // agent_extraordinaire
-});
-
-removeKey("username").then(function (username) {
-    console.log(`REMOVE: ${username}`); // agent_extraordinaire
-});
-*/
-
-var metadata_installationId = sessionStorage.getItem("wla_list_users_install_id")
-
-//console.log(`localstorage id: ${metadata_installationId}`)
+/*****************************************************************************************
+ * getMetaDataInstallationID()
+ *****************************************************************************************/
+function getMetaDataInstallationID() {
+    return sessionStorage.getItem("wla_list_users_install_id")
+}
 
 /*****************************************************************************************
  * setKey(key, val)
  *****************************************************************************************/
 function setKey(key, val) {
+    var metadata_installationId = getMetaDataInstallationID()
     return localStorage.setItem(metadata_installationId + ":" + key, val);
 }
 
@@ -28,6 +17,7 @@ function setKey(key, val) {
  * getKey(key, val)
  *****************************************************************************************/
 function getKey(key) {
+    var metadata_installationId = getMetaDataInstallationID()
     return localStorage.getItem(metadata_installationId + ":" + key);
 }
 
@@ -35,6 +25,7 @@ function getKey(key) {
  * removeKey(key, val)
  *****************************************************************************************/
 function removeKey(key) {
+    var metadata_installationId = getMetaDataInstallationID()
     return localStorage.removeItem(metadata_installationId + ":" + key);
 }
 

@@ -145,9 +145,10 @@ async function processUserObjects(array_of_user_objects) {
  *****************************************************************************************/
 const main = async () => {
 
+
 	zd_metadata = await client.metadata()
 	sessionStorage.setItem("wla_list_users_install_id", zd_metadata.installationId)
-	//console.log(`zd_matadata: ${zd_metadata.installationId}`)
+	//	console.log(`zd_metadata: ${zd_metadata.installationId}`)
 
 	/*****************************************************************************************
 	 * USE LOCAL STORAGE TO SET OR GET zd_domain
@@ -244,12 +245,25 @@ const main = async () => {
 	/*****************************************************************************************/
 	var group_by_key = getKey("wla_list_users_settings_group_users_by_field_value")
 	var link_names_value = getKey("wla_list_users_settings_make_username_url_value")
+	var include_user_id = getKey("wla_list_users_settings_include_user_id")
+	var include_user_url = getKey("wla_list_users_settings_include_user_url")
+
+	console.log(`group_by_key: ${group_by_key}`)
+	console.log(`link_names_value: ${link_names_value}`)
+
+	console.log(`include_user_id: ${include_user_id}`)
+	console.log(`include_user_url: ${include_user_url}`)
+
+
+
+	var table_columns_object = []
+
 
 	/*****************************************************************************************
 	 * CREATE USER COLUMN
 	/*****************************************************************************************/
 	if (link_names_value === 'Yes') {
-		var name_column_object = {
+		var user_name_column_object = {
 			title: "Name", field: "name", formatter: "link", formatterParams: {
 				labelField: "name",
 				urlField: "agent_url",
@@ -257,13 +271,57 @@ const main = async () => {
 			}
 		}
 	}
+
 	/*****************************************************************************************/
 	if (link_names_value !== 'Yes') {
-		var name_column_object = {
+		var user_name_column_object = {
 			title: "Name", field: "name"
 		}
 	}
+
 	/*****************************************************************************************/
+	if (include_user_id === 'true') {
+		var user_id_column_object = { title: "User ID", field: "id" }
+		table_columns_object.push(user_id_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************/
+	if (include_user_url === 'true') {
+		var user_url_column_object = { title: "User URL", field: "url" }
+		table_columns_object.push(user_url_column_object)
+	}
+	/*****************************************************************************************/
+
+
+	/*****************************************************************************************/
+	var user_email_column_object = {
+		title: "Email", field: "email", formatter: "link", formatterParams: {
+			labelField: "email",
+			urlPrefix: "mailto://",
+			target: "_blank"
+		}
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************/
+	var user_title_column_object = { title: "Role", field: "role" }
+	var user_tags_column_object = { title: "Tags", field: "tags", headerSort: false }
+	var user_last_login_date_column_object = { title: "Last Login Date", field: "last_login_date" }
+	var user_last_login_time_column_object = { title: "Last Login Time", field: "last_login_time" }
+	var user_organizations_column_object = { title: "Organizations", field: "organization_names", headerSort: false }
+	/*****************************************************************************************/
+
+	/*****************************************************************************************/
+	table_columns_object.push(user_name_column_object)
+	table_columns_object.push(user_email_column_object)
+	table_columns_object.push(user_title_column_object)
+	table_columns_object.push(user_tags_column_object)
+	table_columns_object.push(user_last_login_date_column_object)
+	table_columns_object.push(user_last_login_time_column_object)
+	table_columns_object.push(user_organizations_column_object)
+	/*****************************************************************************************/
+
 
 	/*****************************************************************************************
 	 * CREATE TABLE OBJECT
@@ -281,14 +339,19 @@ const main = async () => {
 		//			["Admin", "Agent", "End-user"]
 		//		],
 		groupStartOpen: [true],
-		columns: [
-			/*			{
-							title: "Name", field: "name", formatter: "link", formatterParams: {
-								labelField: "name",
-								urlField: "agent_url",
-								target: "_blank"
-							}
-						},*/
+		columns: table_columns_object,
+
+		/*
+				columns: [
+					/*			{
+									title: "Name", field: "name", formatter: "link", formatterParams: {
+										labelField: "name",
+										urlField: "agent_url",
+										target: "_blank"
+									}
+								},*/
+		/*
+			user_id_column_object,
 			name_column_object,
 			{
 				title: "Email", field: "email", formatter: "link", formatterParams: {
@@ -302,7 +365,8 @@ const main = async () => {
 			{ title: "Last Login Date", field: "last_login_date" },
 			{ title: "Last Login Time", field: "last_login_time" },
 			{ title: "Organizations", field: "organization_names", headerSort: false }
-		],
+		]
+,*/
 		initialSort: [
 			{
 				column: "name", dir: "asc"
