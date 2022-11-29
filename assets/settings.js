@@ -33,11 +33,13 @@ function getCurrentlySavedSettings() {
 
     Object.entries(form_elements).forEach(form_element_array => {
         var form_element_id = form_element_array[0]
+        //        console.log(`FORM ELEMENT ID:\n${form_element_id}`)
 
         if (form_element_id.includes('wla_list_users_settings')) {
             var saved_form_element_value = getKey(form_element_id)
+            //            console.log(`SAVED FORM ELEMENT VALUE:\n${saved_form_element_value}`)
             var saved_form_element_type = document.getElementById(form_element_id).type
-            console.log(`FORM ELEMENT TYPE: ${saved_form_element_type}`)
+            //console.log(`FORM ELEMENT TYPE: ${saved_form_element_type}`)
 
             if (saved_form_element_type !== 'checkbox') {
                 document.getElementById(form_element_id).value = saved_form_element_value

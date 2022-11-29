@@ -366,11 +366,7 @@ const main = async () => {
 
 
 
-	console.log(`group_by_key: ${group_by_key}`)
-	console.log(`link_names_value: ${link_names_value}`)
-
-	console.log(`include_user_id: ${include_user_id}`)
-	console.log(`include_user_url: ${include_user_url}`)
+	// https://www.aspsnippets.com/Articles/Add-Insert-Items-Options-to-DropDownList-on-Button-click-using-JavaScript.aspx
 
 	if (sort_by_key === '') {
 		sort_by_key = 'name'

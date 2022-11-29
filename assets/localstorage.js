@@ -2,7 +2,11 @@
  * getMetaDataInstallationID()
  *****************************************************************************************/
 function getMetaDataInstallationID() {
-    return sessionStorage.getItem("wla_list_users_install_id")
+    /* THE BELOW IS FOR PRODUCTION, WHEN THE INSTALLATION ID WON'T CHANGE
+     return sessionStorage.getItem("wla_list_users_install_id")
+     */
+
+    return 'wla_list_users_install_id'
 }
 
 /*****************************************************************************************
@@ -18,6 +22,7 @@ function setKey(key, val) {
  *****************************************************************************************/
 function getKey(key) {
     var metadata_installationId = getMetaDataInstallationID()
+    //    console.log(`GETKEY METADATA: ${metadata_installationId}`)
     return localStorage.getItem(metadata_installationId + ":" + key);
 }
 
