@@ -4,8 +4,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <!-- Zendesk Garden CSS styles -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-buttons@7,npm/@zendeskgarden/css-utilities@4">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-buttons@7,npm/@zendeskgarden/css-utilities@4">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
 </head>
 
@@ -24,20 +23,20 @@
   <link href="./wla_list_users_script.css" rel="stylesheet">
   <script type="text/javascript" src="./wla_list_users_script.js"></script>
   <script type="text/javascript" src="./localstorage.js"></script>
-  
+
   <script>
     main()
-  </script> 
-  
-  <button class="btn-23" id="download-csv">Download CSV</button> 
+  </script>
+
+  <button class="btn-23" id="download-csv">Download CSV</button>
   <button class="btn-23" id="download-json">Download JSON</button>
   <button class="btn-23" id="download-xlsx">Download XLSX</button>
   <button class="btn-23" id="download-pdf">Download PDF</button>
   <button class="btn-23" id="download-html">Download HTML</button>
-  
+
   <br>
   <br>
-  
+
   <div>
     <select id="filter-field">
       <optgroup>
@@ -51,7 +50,7 @@
         <option value="organization_names">Organization</option>
       </optgroup>
     </select>
-  
+
     <select id="filter-type">
       <optgroup>
         <option value="=">=</option>
@@ -63,14 +62,14 @@
         <option value="like">like</option>
       </optgroup>
     </select>
-  
-    <input id="filter-value" placeholder="value to filter" type="text"> 
+
+    <input id="filter-value" placeholder="value to filter" type="text">
     <button class="btn-23" id="filter-clear">Clear Filter</button>
     <button class="btn-23" id="settings">Settings</button>
   </div>
-  
+
   <br>
-  
+
   <div id="example-table"></div>
 
 </body>

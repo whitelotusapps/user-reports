@@ -359,7 +359,9 @@ const main = async () => {
 	var include_user_restricted_agent = getKey("wla_list_users_settings_include_user_restricted_agent")
 	var include_user_suspended = getKey("wla_list_users_settings_include_user_suspended")
 	var include_user_default_group_name = getKey("wla_list_users_settings_include_user_default_group_name")
+	var include_user_default_group_id = getKey("wla_list_users_settings_include_user_default_group_id")
 	var include_user_groups = getKey("wla_list_users_settings_include_user_groups")
+	var include_user_report_csv = getKey("wla_list_users_settings_include_user_report_csv")
 
 
 
@@ -766,11 +768,29 @@ const main = async () => {
 	/*****************************************************************************************/
 
 	/*****************************************************************************************
+	* USER DEFAULT GROUP ID
+	/*****************************************************************************************/
+	if (include_user_default_group_id === 'true') {
+		var user_default_group_id_column_object = { title: "Default Group ID", field: "default_group_id" }
+		table_columns_object.push(user_default_group_id_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
 	* USER GROUPS
 	/*****************************************************************************************/
 	if (include_user_groups === 'true') {
 		var user_groups_column_object = { title: "Agent Groups", field: "user_groups", headerSort: false }
 		table_columns_object.push(user_groups_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	* USER REPORT CSV
+	/*****************************************************************************************/
+	if (include_user_report_csv === 'true') {
+		var user_report_csv_column_object = { title: "Resport CSV", field: "report_csv" }
+		table_columns_object.push(user_report_csv_column_object)
 	}
 	/*****************************************************************************************/
 
