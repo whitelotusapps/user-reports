@@ -1420,6 +1420,8 @@ select {
 .form-style-2 {
     padding: 20px 12px 10px 20px;
     font-family: "Varela Round";
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .form-style-2-heading {
@@ -1452,6 +1454,8 @@ select {
     -moz-border-radius: 3px;
     padding: 5px;
     outline: none;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .form-style-2 input[type="checkbox"] {
@@ -1469,4 +1473,9 @@ select {
 .form-style-2 input[type="checkbox"]:checked+span {
     background-color: #000;
     color: #5eff00;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
 }
