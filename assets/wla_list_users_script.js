@@ -163,7 +163,7 @@ async function processUserObjects(array_of_user_objects) {
 		THE BELOW CODE UPDATES THE USER OBJECT WITH DATA, AND DATA FORMATS, THAT WE WANT TO DISPLAY
 		IN OUR TABLE.
 		*****************************************************************************************/
-		user_object['organization_names'] = []
+		user_object['organization_names'] = ''
 		user_object['tags'] = user_object['tags'].sort()
 		user_object['tags'] = user_object['tags'].join()
 		user_object['role'] = user_object['role'].replace(/^./, str => str.toUpperCase())
@@ -362,6 +362,7 @@ const main = async () => {
 	var include_user_default_group_id = getKey("wla_list_users_settings_include_user_default_group_id")
 	var include_user_groups = getKey("wla_list_users_settings_include_user_groups")
 	var include_user_report_csv = getKey("wla_list_users_settings_include_user_report_csv")
+	var include_user_organizations = getKey("wla_list_users_settings_include_user_organizations")
 
 
 
@@ -794,11 +795,13 @@ const main = async () => {
 	}
 	/*****************************************************************************************/
 
-	var user_created_at_date_column_object = { title: "Created At Date", field: "created_at_date" }
-	var user_created_at_time_column_object = { title: "Created At Time", field: "created_at_time" }
-	var user_updated_at_date_column_object = { title: "Updated At Date", field: "updated_at_date" }
-	var user_updated_at_date_column_object = { title: "Updated At Time", field: "updated_at_time" }
-	var user_organizations_column_object = { title: "Organizations", field: "organization_names", headerSort: false }
+	/*****************************************************************************************
+	* USER ORGANIZATIONS
+	/*****************************************************************************************/
+	if (include_user_organizations === 'true') {
+		var user_organizations_column_object = { title: "Organizations", field: "organization_names", headerSort: false }
+		table_columns_object.push(user_organizations_column_object)
+	}
 	/*****************************************************************************************/
 
 
