@@ -92,14 +92,62 @@ async function getData(zd_url, zd_json_key) {
  *****************************************************************************************/
 function processUserOrganizations(user_organizations) {
 
-	var user_organization_array = []
+	var user_organizations_array = []
 	Object.entries(user_organizations).forEach(user_organization => {
 		var processed_user_organization = user_organization[1]
 		var user_organization_name = processed_user_organization[0]['name']
-		user_organization_array.push(user_organization_name)
+		user_organizations_array.push(user_organization_name)
 	})
-	return user_organization_array
+
+	user_organizations_array.sort()
+	var user_organizations_string = user_organizations_array.join()
+
+	return user_organizations_string
 }
+
+/*****************************************************************************************
+ * processUserGroups(user_groups)
+ *****************************************************************************************/
+function processUserGroups(user_groups) {
+
+	var user_groups_array = []
+	Object.entries(user_groups).forEach(user_group => {
+		var processed_user_group = user_group[1]
+		var user_group_name = processed_user_group[0]['name']
+
+		user_groups_array.push(user_group_name)
+	})
+
+	user_groups_array.sort()
+	var user_groups_string = user_groups_array.join()
+
+	return user_groups_string
+
+}
+
+/*****************************************************************************************
+ * getDefaultUserGroupName(user_groups)
+ *****************************************************************************************/
+function getDefaultUserGroupName(user_groups, user_default_group_id) {
+
+	var user_default_group_name = ''
+
+	Object.entries(user_groups).forEach(user_group => {
+		var processed_user_group = user_group[1][0]
+
+		if (processed_user_group['default'] === true) {
+			user_default_group_name = processed_user_group['name']
+		}
+
+		if (processed_user_group['id'] === user_default_group_id) {
+			user_default_group_name = processed_user_group['name']
+		}
+
+	})
+
+	return user_default_group_name
+}
+
 
 /*****************************************************************************************
  * processUserObjects(array_of_user_objects)
@@ -117,6 +165,7 @@ async function processUserObjects(array_of_user_objects) {
 		*****************************************************************************************/
 		user_object['organization_names'] = []
 		user_object['tags'] = user_object['tags'].sort()
+		user_object['tags'] = user_object['tags'].join()
 		user_object['role'] = user_object['role'].replace(/^./, str => str.toUpperCase())
 		user_object['agent_url'] = 'https://' + zd_domain + '.zendesk.com/agent/users/' + user_object['id']
 
@@ -124,6 +173,17 @@ async function processUserObjects(array_of_user_objects) {
 			var user_organization_endpoint = `/api/v2/users/${user_object['id']}/organizations.json`
 			var user_organizations = await getData(user_organization_endpoint, 'organizations')
 			user_object['organization_names'] = processUserOrganizations(user_organizations)
+			//			user_object['organization_names'].sort()
+		}
+
+		if (user_object['role'] !== 'End-user') {
+			var user_groups_endpoint = `/api/v2/users/${user_object['id']}/groups`
+			var user_groups = await getData(user_groups_endpoint, 'groups')
+			var user_default_group_id = user_object['default_group_id']
+			user_object['default_group_name'] = getDefaultUserGroupName(user_groups, user_default_group_id)
+			user_object['user_groups'] = processUserGroups(user_groups)
+			//			console.log("TYPE: " + typeof (user_object['user_groups'].join()))
+			//			console.log("MEH: \n" + JSON.stringify(user_object['user_groups'].join(), null, '\t'))
 		}
 
 		if (user_object['last_login_at']) {
@@ -296,6 +356,10 @@ const main = async () => {
 	var include_user_moderator = getKey("wla_list_users_settings_include_user_moderator")
 	var include_user_ticket_restriction = getKey("wla_list_users_settings_include_user_ticket_restriction")
 	var include_user_only_private_comments = getKey("wla_list_users_settings_include_user_only_private_comments")
+	var include_user_restricted_agent = getKey("wla_list_users_settings_include_user_restricted_agent")
+	var include_user_suspended = getKey("wla_list_users_settings_include_user_suspended")
+	var include_user_default_group_name = getKey("wla_list_users_settings_include_user_default_group_name")
+	var include_user_groups = getKey("wla_list_users_settings_include_user_groups")
 
 
 
@@ -674,8 +738,41 @@ const main = async () => {
 	}
 	/*****************************************************************************************/
 
+	/*****************************************************************************************
+	* USER RESTRICTED AGENT
+	/*****************************************************************************************/
+	if (include_user_restricted_agent === 'true') {
+		var user_restricted_agent_column_object = { title: "Restricted Agent", field: "restricted_agent" }
+		table_columns_object.push(user_restricted_agent_column_object)
+	}
+	/*****************************************************************************************/
 
+	/*****************************************************************************************
+	* USER SUSPENSION STATUS
+	/*****************************************************************************************/
+	if (include_user_suspended === 'true') {
+		var user_suspended_column_object = { title: "Suspended", field: "suspended" }
+		table_columns_object.push(user_suspended_column_object)
+	}
+	/*****************************************************************************************/
 
+	/*****************************************************************************************
+	* USER DEFAULT GROUP NAME
+	/*****************************************************************************************/
+	if (include_user_default_group_name === 'true') {
+		var user_default_group_name_column_object = { title: "Default Group", field: "default_group_name" }
+		table_columns_object.push(user_default_group_name_column_object)
+	}
+	/*****************************************************************************************/
+
+	/*****************************************************************************************
+	* USER GROUPS
+	/*****************************************************************************************/
+	if (include_user_groups === 'true') {
+		var user_groups_column_object = { title: "Agent Groups", field: "user_groups", headerSort: false }
+		table_columns_object.push(user_groups_column_object)
+	}
+	/*****************************************************************************************/
 
 	var user_created_at_date_column_object = { title: "Created At Date", field: "created_at_date" }
 	var user_created_at_time_column_object = { title: "Created At Time", field: "created_at_time" }
@@ -735,6 +832,7 @@ const main = async () => {
 				column: sort_by_key, dir: "asc"
 			}
 		],
+		movableColumns: true,
 		pagination: true,
 		paginationSize: 25,
 		paginationSizeSelector: [10, 25, 50, 100, true] //select list with an "all" option at the end of the list
