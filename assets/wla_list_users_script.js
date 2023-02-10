@@ -209,6 +209,7 @@ async function processUserObjects(array_of_user_objects) {
 		all_users.push(user_object)
 	} // END FOR LOOP
 	/*****************************************************************************************/
+	all_users.sort((a, b) => (a.role > b.role) ? 1 : -1);
 	return all_users
 
 } // END OF processUserObjects()
@@ -373,6 +374,13 @@ const main = async () => {
 	}
 
 	var table_columns_object = []
+
+	/* WE WERE TRYING TO SEE IF WE COULD GET THE ROWS TO BE TOGGLE WITH A CHECKBOX:
+	https://tabulator.info/examples/4.6#selectable-tick
+	*/
+	//var first_column_object = { formatter: "rowSelection", titleFormatter: "rowSelection", hozAlign: "center", headerSort: false, cellClick: function (e, cell) { cell.getRow().toggleSelect(); } }
+	var first_column_object = { formatter: "rowSelection", titleFormatter: "rowSelection", headerSort: false, cellClick: function (e, cell) { cell.getRow().toggleSelect(); } }
+	table_columns_object.push(first_column_object)
 
 
 	/*****************************************************************************************
@@ -800,7 +808,7 @@ const main = async () => {
 	}
 	/*****************************************************************************************/
 
-
+	console.log("TABLE_COLUMN_OBJECTS:\n" + JSON.stringify(table_columns_object, null, '\t'))
 	/*****************************************************************************************
 	 * CREATE TABLE OBJECT
 	 /*****************************************************************************************/
