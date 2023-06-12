@@ -1,5 +1,14 @@
 # User Reports
 
+![GitHub tag checks state](https://img.shields.io/github/checks-status/whitelotusapps/user-reports/v1.0)
+![GitHub language count](https://img.shields.io/github/languages/count/whitelotusapps/user-reports)
+![GitHub top language](https://img.shields.io/github/languages/top/whitelotusapps/user-reports)
+![GitHub repo size](https://img.shields.io/github/repo-size/whitelotusapps/user-reports)
+![GitHub all releases](https://img.shields.io/github/downloads/whitelotusapps/user-reports/total)
+![GitHub issues](https://img.shields.io/github/issues-raw/whitelotusapps/user-reports)
+![GitHub](https://img.shields.io/github/license/whitelotusapps/user-reports)
+![GitHub last commit](https://img.shields.io/github/last-commit/whitelotusapps/user-reports)
+
 v1.0 Features:
 
 * Select any "standard element" of a user object to export into a report
