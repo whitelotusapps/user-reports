@@ -4,7 +4,7 @@ v1.0 Features:
 
 * Select any "standard element" of a user object to export into a report
   * Custom User Fields are not supported in the exports
-  * Below are the items that can included in teh report:
+  * Below are the items that can included in the report:
     - Name
     - Role
     - Email
@@ -70,7 +70,15 @@ v1.0 Features:
 
 * User email addresses are linked, clicking on them will open your mail client to compose an email
 
-ISSUES USERS ARE HAVING WITH THE "SUPER ADMIN" APP BY ZENDESK:
+
+# Known Issues:
+
+* Searching by login date or time is not currently working
+* This has not been tested on instances larger than a few hundred users
+
+
+# Inspiration: 
+Issues that users were discussing regarding the Super Admin App:
 
 [Super Admin app - Marketplace](https://www.zendesk.com/marketplace/apps/support/259163/super-admin/)<br>
 [Installing and using the Super Admin app](https://support.zendesk.com/hc/en-us/articles/4408881571482)<br>
