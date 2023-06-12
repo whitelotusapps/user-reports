@@ -9,6 +9,14 @@
 ![GitHub](https://img.shields.io/github/license/whitelotusapps/user-reports)
 ![GitHub last commit](https://img.shields.io/github/last-commit/whitelotusapps/user-reports)
 
+## Safety Level
+SAFE
+
+- READ-ONLY regarding Zendesk instances
+- This script only performs GET API requests
+- No data is written into the Zendesk instance itself
+- The localstore of the webbrowser is written to
+- Generated export files will be saved to the local machine
 ## v1.0 Features:
 
 * Select any "standard element" of a user object to export into a report
