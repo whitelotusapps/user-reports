@@ -17,6 +17,44 @@ SAFE
 - No data is written into the Zendesk instance itself
 - The localstore of the webbrowser is written to
 - Generated export files will be saved to the local machine
+
+## Installation
+1. Download the "source.zip" from the Releases section, which is located on the right hand side of this page
+2. Login to the Admin Console of your Zendesk Instance
+3. Navigate to "Zendesk Support Apps"
+4. In the upper right hand corner of the screen, there should be a "Upload private app" button, click on this
+5. For the "Appe Name", type in "User Reports"
+6. Click "Choose File"
+7. Browse to the location on your computer where you saved the "users-reports-1.0.zip" (NOTE: the version number is subject to change)
+8. Click "Upload"
+9. Another screen should appear, review the caveats, and if you are sure, then press "Upload"
+10. The app will then queue and then install into your Zendesk instance
+11. You will be presented with the standard config screen to enable role and/or group restrictions
+12. Once you have defined the restrictions, click "Install"
+13. The "User Reports" app is now installed into your Zendesk instance
+
+You will find the "User Report" icon located on the left hand side of the Agent support window.
+
+## Configuration
+
+There are some steps that are required before this app will be useful. Click on the app icon on the left hand side, and then follow the below steps:
+
+1. Click on the "Settings" button
+2. Play around with these settings. A typical configuration may be:
+  - Group users by field: Role
+  - Sort users by field: Role
+  - Make usernames URL?: Yes
+  - Make user emails URL?: Yes
+
+3. Select what items from the user object you wish to have displayed in a table
+4. Once you have selected the items you wish to see, click "Save Settings"
+
+## Usage
+
+1. Once you have configured the app, you are now ready to use it
+2. Each column can be dragged and dropped to another location, and you can sort by the different column heading by clicking on them
+3. Play around with the exports; you will find that whatever is shown in the table is what will be exported
+4. CSV and XLSX are going to be your best options for auditing and reporting
 ## v1.0 Features:
 
 * Select any "standard element" of a user object to export into a report
