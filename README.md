@@ -1,4 +1,4 @@
-# List Users
+# Community Manager App
 
 ISSUES USERS ARE HAVING WITH THE "SUPER ADMIN" APP BY ZENDESK:
 
