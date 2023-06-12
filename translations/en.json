@@ -1,8 +1,8 @@
 {
   "app": {
-    "name": "List Users",
-    "short_description": "List and export user info",
-    "long_description": "List and export user info to CSV, XSLX, PDF, HTML, and JSON.",
+    "name": "User Reports",
+    "short_description": "Export data about your users in CSV, XSLX, PDF, HTML, and JSON.",
+    "long_description": "Export data about your users in CSV, XSLX, PDF, HTML, and JSON.",
     "installation_instructions": "Simply click install."
   }
 }

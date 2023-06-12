@@ -1,5 +1,5 @@
 {
-  "name": "List Users",
+  "name": "User Reports",
   "author": {
     "name": "White Lotus Apps",
     "email": "support@whitelotusapps.com",
@@ -14,7 +14,7 @@
       }
     }
   },
-  "version": "1.50",
+  "version": "1.0",
   "frameworkVersion": "2.0",
   "single_install": true
 }
