@@ -9,6 +9,26 @@
 ![GitHub](https://img.shields.io/github/license/whitelotusapps/user-reports)
 ![GitHub last commit](https://img.shields.io/github/last-commit/whitelotusapps/user-reports)
 
+## Purpose
+
+The purpose of this app is to allow Zendesk Admins to export their entire user base to CSV, XSLS, JSON, HTML or PDF for reporting purposes. 
+
+Things to know about v1.0:
+
+- To obtain the text names of the groups and organizations, two API calls are made per user
+- The user search criteria is:
+  - /api/v2/users?page[size]=100
+    - This means that we are searching for ALL users, not just Agents and Admins
+- As seen above, we are currently using CBP and set the page size to 100 entries
+- This version pages through all of the pages and aggregates all of the data into one large array that it then passes to the table for displaying
+# Known Issues:
+
+* Searching by login date or time is not currently working
+* This has not been tested on instances larger than a few hundred users
+  - It is possible that, due to the way that v1.0 is currently designed, that:
+    - API rate limits may be reached
+    - Large data sets may slow down, lock up, or even crash the browser (speculation)
+* The PNG and SVG files contain different images
 ## Safety Level
 SAFE
 
@@ -124,18 +144,9 @@ There are some steps that are required before this app will be useful. Click on 
 * Users names are linked, and will open a new window to the users profile
 
 * User email addresses are linked, clicking on them will open your mail client to compose an email
-
-
-# Known Issues:
-
-* Searching by login date or time is not currently working
-* This has not been tested on instances larger than a few hundred users
-* The PNG and SVG files contain different images
-
-
 # Inspiration: 
 Issues that users were discussing regarding the Super Admin App:
 
-[Super Admin app - Marketplace](https://www.zendesk.com/marketplace/apps/support/259163/super-admin/)<br>
-[Installing and using the Super Admin app](https://support.zendesk.com/hc/en-us/articles/4408881571482)<br>
-[Super Admin app - official feature request thread](https://support.zendesk.com/hc/en-us/community/posts/4409217165466)<br>
+[Super Admin app - Marketplace](https://www.zendesk.com/marketplace/apps/support/259163/super-admin/)
+[Installing and using the Super Admin app](https://support.zendesk.com/hc/en-us/articles/4408881571482)
+[Super Admin app - official feature request thread](https://support.zendesk.com/hc/en-us/community/posts/4409217165466)
