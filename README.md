@@ -9,7 +9,7 @@
 ![GitHub](https://img.shields.io/github/license/whitelotusapps/user-reports)
 ![GitHub last commit](https://img.shields.io/github/last-commit/whitelotusapps/user-reports)
 
-v1.0 Features:
+## v1.0 Features:
 
 * Select any "standard element" of a user object to export into a report
   * Custom User Fields are not supported in the exports
