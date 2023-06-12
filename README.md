@@ -21,7 +21,7 @@ Things to know about v1.0:
     - This means that we are searching for ALL users, not just Agents and Admins
 - As seen above, we are currently using CBP and set the page size to 100 entries
 - This version pages through all of the pages and aggregates all of the data into one large array that it then passes to the table for displaying
-# Known Issues:
+## Known Issues:
 
 * Searching by login date or time is not currently working
 * This has not been tested on instances larger than a few hundred users
