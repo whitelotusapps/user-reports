@@ -23,7 +23,7 @@ SAFE
 2. Login to the Admin Console of your Zendesk Instance
 3. Navigate to "Zendesk Support Apps"
 4. In the upper right hand corner of the screen, there should be a "Upload private app" button, click on this
-5. For the "Appe Name", type in "User Reports"
+5. For the "App Name", type in "User Reports"
 6. Click "Choose File"
 7. Browse to the location on your computer where you saved the "users-reports-1.0.zip" (NOTE: the version number is subject to change)
 8. Click "Upload"
@@ -130,6 +130,7 @@ There are some steps that are required before this app will be useful. Click on 
 
 * Searching by login date or time is not currently working
 * This has not been tested on instances larger than a few hundred users
+* The PNG and SVG files contain different images
 
 
 # Inspiration: 
