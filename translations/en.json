@@ -1,8 +1,8 @@
 {
   "app": {
-    "name": "Zen Tunes",
-    "short_description": "Play the famous zen tunes in your help desk.",
-    "long_description": "Play the famous zen tunes in your help desk and \n listen to the beats it has to offer.",
+    "name": "List Users",
+    "short_description": "List and export user info",
+    "long_description": "List and export user info to CSV, XSLX, PDF, HTML, and JSON.",
     "installation_instructions": "Simply click install."
   }
 }
