@@ -25,7 +25,7 @@ Things to know about v1.0:
 
 * Searching by login date or time is not currently working
 * This has not been tested on instances larger than a few hundred users
-  - It is possible that, due to the way that v1.0 is currently designed, that:
+  - It is possible, due to the way that v1.0 is currently designed, that:
     - API rate limits may be reached
     - Large data sets may slow down, lock up, or even crash the browser (speculation)
 * The PNG and SVG files contain different images
